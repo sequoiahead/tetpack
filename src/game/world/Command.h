@@ -1,19 +1,16 @@
 #ifndef COMMAND_H_
 #define COMMAND_H_
 
+typedef unsigned int CommandId;
+
+template <class W>
 class Command {
 public:
 
-	static const int CMD_NONE;
-	static const int CMD_EXIT;
-
-	explicit Command(int aId)
-			: id(aId) {
-	}
-
-	inline const int& getId() const {
-		return id;
-	}
+	explicit Command(CommandId);
+	virtual ~Command();
+	const int& getId() const;
+	virtual void execute(W&) const =0;
 
 	inline bool operator==(const Command& cmd) const {
 		return id == cmd.id;
@@ -23,24 +20,18 @@ public:
 		return !(*this == cmd);
 	}
 
-	virtual ~Command() {
-	}
 private:
-	int id;
+	CommandId id;
 };
 
-class CommandNone : public Command {
-public:
-	CommandNone()
-		: Command(Command::CMD_NONE) {
-	};
-};
+template<class W>
+Command<W>::Command(CommandId aId)
+		: id(aId) {
+}
 
-class CommandExit : public Command {
-public:
-	CommandExit()
-		: Command(Command::CMD_EXIT) {
-	};
-};
+template<class W>
+inline const int& Command<W>::getId() const {
+	return id;
+}
 
 #endif /* COMMAND_H_ */
