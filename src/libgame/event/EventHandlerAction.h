@@ -52,7 +52,11 @@ Action* EventHandlerAction<Event>::resolve(const Event& aEvent) {
 
 template<typename Event>
 void EventHandlerAction<Event>::handle(const SDL_Event& aEvent) {
-	resolve(aEvent.key)->invoke();
+	try {
+		resolve(aEvent.key)->invoke();
+	} catch (NoActionException& e) {
+		//do nothing for now
+	}
 }
 
 #endif /* EVENTHANDLERABSTRACT_H_ */
