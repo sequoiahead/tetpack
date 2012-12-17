@@ -1,9 +1,9 @@
 #ifndef TETPACKVIEW_H_
 #define TETPACKVIEW_H_
 
-#include "view/View.h"
+#include <libgame/view/ViewScreen.h>
 
-class TetPackView: public View {
+class TetPackView: public ViewScreen {
 public:
 	TetPackView();
 	virtual ~TetPackView();
