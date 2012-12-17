@@ -1,33 +1,29 @@
-#include "TheGame.h"
-#include "view/TetPackView.h"
-#include "world/TetPackWorld.h"
-#include "input/InputConfiguration.h"
-#include "input/InputController.h"
 #include <SDL/SDL.h>
+
+#include "libgame/TheGame.h"
+#include "libgame/event/EventHandlerKeyboard.h"
+#include "libgame/action/ActionGame.h"
+#include "libgame/action/ActionLogging.h"
 
 int main (int argc, char** argv) {
 	TheGame game;
 
-	InputConfiguration config;
-	CommandMoveRight mvrCmd;
-	CommandMoveLeft mvlCmd;
-	CommandRotate rotCmd;
-	CommandDrop dropCmd;
-	CommandExit exitCmd;
-	config.set(SDLK_LEFT, mvlCmd);
-	config.set(SDLK_RIGHT, mvrCmd);
-	config.set(SDLK_UP, rotCmd);
-	config.set(SDLK_DOWN, dropCmd);
-	config.set(SDLK_ESCAPE, exitCmd);
+	ActionGameQuit actionQuit(&game);
 
-	InputController* c = new InputController(config);
-	View* v = new TetPackView;
-	World* w = new TetPackWorld;
+	ActionLogging actionLoggingEsc("Escape");
+	ActionLogging actionLoggingLeft("Left");
+	ActionLogging actionLoggingRight("Right");
+	ActionLogging actionLoggingUp("Up");
+	ActionLogging actionLoggingDown("Down");
 
-	game.setWorld(w);
-	game.setView(v);
-	game.setController(c);
+	EventHandlerKeyboard handlerKeyboard;
+	handlerKeyboard.bind(SDLK_ESCAPE, &actionLoggingEsc);
+	handlerKeyboard.bind(SDLK_LEFT, &actionLoggingLeft);
+	handlerKeyboard.bind(SDLK_RIGHT, &actionLoggingRight);
+	handlerKeyboard.bind(SDLK_UP, &actionLoggingUp);
+	handlerKeyboard.bind(SDLK_DOWN, &actionLoggingDown);
 
+	game.addEventHandler(&handlerKeyboard);
 	game.start();
 
 	return 0;
