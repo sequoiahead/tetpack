@@ -5,7 +5,6 @@
 #include <vector>
 #include <SDL/SDL.h>
 
-#include "libgame/view/View.h"
 #include "libgame/event/EventHandler.h"
 
 const unsigned int SDL_EVENT_TICK = 1;
@@ -20,15 +19,16 @@ public:
 	void start();
 	void stop();
 
+	static Uint32 sendTick(Uint32 interval, void *param);
 	static SDL_UserEvent getTickEvent();
 	static SDL_QuitEvent getQuitEvent();
 
 private:
 	typedef std::pair<SDL_EventType, EventHandler*> RecordHandlers;
 	typedef std::map<SDL_EventType, EventHandler*> RegistryHandlers;
+	typedef RegistryHandlers::iterator RegistryHandlersIt;
 
 	RegistryHandlers handlers;
-	std::vector<View*> views;
 	bool isRunning;
 
 	//noncopyable

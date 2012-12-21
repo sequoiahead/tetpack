@@ -4,6 +4,7 @@
 #include <map>
 
 #include "libgame/util/sdl_compat.h"
+#include "libgame/action/Action.h"
 #include "libgame/event/EventHandler.h"
 #include "libgame/event/Exceptions.h"
 
@@ -45,6 +46,11 @@ void EventHandlerAction<Event>::unbind(const Event& aEvent) {
 	mapActions.erase(aEvent);
 }
 
+/**
+ * @throw NoActoinException
+ * @param aEvent
+ * @return Action to invoke
+ */
 template<typename Event>
 Action* const EventHandlerAction<Event>::resolve(const Event& aEvent) {
 	ActionMapIt it = mapActions.find(aEvent);

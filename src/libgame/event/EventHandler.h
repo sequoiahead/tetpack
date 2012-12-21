@@ -3,8 +3,6 @@
 
 #include <SDL/SDL_events.h>
 
-#include "libgame/action/Action.h"
-
 class EventHandler {
 public:
 	explicit EventHandler(SDL_EventType);
