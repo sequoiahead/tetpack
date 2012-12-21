@@ -3,15 +3,12 @@
 
 #include "libgame/action/Action.h"
 
-class ActionLogging : public Action {
+class ActionLogging : public ActionAbstract<const char> {
 public:
 	explicit ActionLogging(const char*);
 	virtual ~ActionLogging();
 
 	virtual void invoke();
-
-private:
-	const char* message;
 };
 
 #endif /* ACTIONLOGGING_H_ */

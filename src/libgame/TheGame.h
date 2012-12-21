@@ -3,23 +3,25 @@
 
 #include <map>
 #include <vector>
-#include <boost/noncopyable.hpp>
 #include <SDL/SDL.h>
 
 #include "libgame/view/View.h"
 #include "libgame/event/EventHandler.h"
 
-class TheGame : public boost::noncopyable {
+const unsigned int SDL_EVENT_TICK = 1;
+
+class TheGame {
 public:
 	TheGame();
 	~TheGame();
 
 	void addEventHandler(EventHandler*);
 	void removeEventHandler(EventHandler*);
-	void addView(View*);
-	void removeView(View*);
 	void start();
 	void stop();
+
+	static SDL_UserEvent getTickEvent();
+	static SDL_QuitEvent getQuitEvent();
 
 private:
 	typedef std::pair<SDL_EventType, EventHandler*> RecordHandlers;
@@ -28,6 +30,10 @@ private:
 	RegistryHandlers handlers;
 	std::vector<View*> views;
 	bool isRunning;
+
+	//noncopyable
+	TheGame(const TheGame&);
+	const TheGame& operator=(const TheGame&);
 };
 
 #endif /* THEGAME_H_ */

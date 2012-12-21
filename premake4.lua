@@ -25,14 +25,14 @@ solution "tetpack"
 		kind "WindowedApp"
 		language "C++"
 		targetname "tetpack"
-		includedirs { "src" }
+		includedirs { "src/", "src/main/" }
 		files { "src/main/**.cpp" }
 		links { "game", "SDL" }
 		
 	project "game" 
 		kind "StaticLib"
 		language "C++"
-		includedirs { "src" }
+		includedirs { "src/" }
 		files { "src/libgame/**.cpp" }
 		links { "SDL", "boost" }
 		

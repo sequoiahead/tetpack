@@ -1,15 +1,16 @@
 #include <SDL/SDL.h>
 
-#include "libgame/TheGame.h"
-#include "libgame/view/ViewScreen.h"
-#include "libgame/event/EventHandlerKeyboard.h"
-#include "libgame/action/ActionGame.h"
-#include "libgame/action/ActionLogging.h"
+#include <libgame/util/sdl_compat.h>
+#include <libgame/view/ViewScreen.h>
+#include <libgame/event/EventHandlerKeyboard.h>
+#include <libgame/action/ActionLogging.h>
+#include <libgame/TheGame.h>
 
 int main (int argc, char** argv) {
 	TheGame game;
+	ViewScreen screen;
 
-	ActionGameQuit actionQuit(&game);
+	ActionMethod<TheGame> actionQuit(&game, &TheGame::stop);
 
 	ActionLogging actionLoggingEsc("Escape");
 	ActionLogging actionLoggingLeft("Left");
@@ -24,10 +25,17 @@ int main (int argc, char** argv) {
 	handlerKeyboard.bind(SDLK_UP, &actionLoggingUp);
 	handlerKeyboard.bind(SDLK_DOWN, &actionLoggingDown);
 
-	ViewScreen screen;
+	ActionMethod<View> actionViewRender(&screen, &View::render);
 
-	game.addView(&screen);
+	EventHandlerAction<SDL_UserEvent> handlerUserEvent(SDL_USEREVENT);
+	handlerUserEvent.bind(TheGame::getTickEvent(), &actionViewRender);
+
+	EventHandlerAction<SDL_QuitEvent> handlerQuitEvent(SDL_QUIT);
+	handlerQuitEvent.bind(TheGame::getQuitEvent(), &actionQuit);
+
 	game.addEventHandler(&handlerKeyboard);
+	game.addEventHandler(&handlerUserEvent);
+	game.addEventHandler(&handlerQuitEvent);
 	game.start();
 
 	return 0;

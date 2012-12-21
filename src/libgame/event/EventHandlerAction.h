@@ -3,6 +3,7 @@
 
 #include <map>
 
+#include "libgame/util/sdl_compat.h"
 #include "libgame/event/EventHandler.h"
 #include "libgame/event/Exceptions.h"
 
@@ -12,14 +13,17 @@ public:
 	explicit EventHandlerAction(SDL_EventType);
 	virtual ~EventHandlerAction();
 
-	virtual void bind(const Event&, Action*);
+	virtual void bind(const Event&, Action* const);
 	virtual void unbind(const Event&);
-	virtual Action* resolve(const Event&);
+	virtual Action* const resolve(const Event&);
 
 	virtual void handle(const SDL_Event&);
 
 private:
-	std::map<Event, Action*> actionsMap;
+	typedef std::map<Event, Action*> ActionsMap;
+	typedef typename ActionsMap::iterator ActionMapIt;
+
+	ActionsMap mapActions;
 };
 
 template<typename Event>
@@ -32,28 +36,29 @@ EventHandlerAction<Event>::~EventHandlerAction() {
 }
 
 template<typename Event>
-void EventHandlerAction<Event>::bind(const Event& aEvent, Action* aAction) {
-	actionsMap[aEvent] = aAction;
+void EventHandlerAction<Event>::bind(const Event& aEvent, Action* const aAction) {
+	mapActions[aEvent] = aAction;
 }
 
 template<typename Event>
 void EventHandlerAction<Event>::unbind(const Event& aEvent) {
-	actionsMap.erase(aEvent);
+	mapActions.erase(aEvent);
 }
 
 template<typename Event>
-Action* EventHandlerAction<Event>::resolve(const Event& aEvent) {
-	if (actionsMap.count(aEvent) <= 0) {
+Action* const EventHandlerAction<Event>::resolve(const Event& aEvent) {
+	ActionMapIt it = mapActions.find(aEvent);
+	if (it == mapActions.end()) {
 		NoActionException e;
 		throw e;
 	}
-	return actionsMap[aEvent];
+	return it->second;
 }
 
 template<typename Event>
 void EventHandlerAction<Event>::handle(const SDL_Event& aEvent) {
 	try {
-		resolve(aEvent.key)->invoke();
+		resolve(getExactEvent<Event>(aEvent))->invoke();
 	} catch (NoActionException& e) {
 		//do nothing for now
 	}

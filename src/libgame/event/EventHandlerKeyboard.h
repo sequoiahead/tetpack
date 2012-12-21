@@ -13,8 +13,4 @@ public:
 	void bind(const SDLKey&, Action*);
 };
 
-//operator< implementation is mandatory, it's used for ordering
-//element inside actions map
-bool operator<(const SDL_KeyboardEvent&, const SDL_KeyboardEvent&);
-
 #endif /* EVENTHANDLERKEYBOARD_H_ */

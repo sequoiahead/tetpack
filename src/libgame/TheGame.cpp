@@ -1,9 +1,9 @@
 #include <iostream>
 #include <algorithm>
 
-#include <SDL/SDL_video.h>
+#include <SDL/SDL_timer.h>
 
-#include "TheGame.h"
+#include "libgame/TheGame.h"
 
 TheGame::TheGame()
 		: isRunning(false) {
@@ -22,9 +22,37 @@ void TheGame::removeEventHandler(EventHandler* handler) {
 	handlers.erase(handler->getType());
 }
 
+Uint32 sendTick(Uint32 interval, void *param) {
+	SDL_Event evt;
+	evt.type = SDL_USEREVENT;
+	evt.user = TheGame::getTickEvent();
+	SDL_PushEvent(&evt);
+	return interval;
+}
+
+SDL_UserEvent TheGame::getTickEvent() {
+	SDL_UserEvent userevent;
+
+	userevent.type = SDL_USEREVENT;
+	userevent.code = SDL_EVENT_TICK;
+	userevent.data1 = NULL;
+	userevent.data2 = NULL;
+
+	return userevent;
+}
+
+SDL_QuitEvent TheGame::getQuitEvent() {
+	SDL_QuitEvent quitEvent;
+	quitEvent.type = SDL_QUIT;
+	return quitEvent;
+}
+
 void TheGame::start() {
 	SDL_Event event;
 	SDL_EventType type;
+	Uint32 delay = (1000/60);
+	std::cout << delay << std::endl;
+	SDL_TimerID timerTick = SDL_AddTimer(delay, sendTick, NULL);
 	isRunning = true;
 	while (isRunning) {
 		if (!SDL_PollEvent(&event)) {
@@ -35,14 +63,7 @@ void TheGame::start() {
 			handlers[type]->handle(event);
 		}
 	}
-}
-
-void TheGame::addView(View* aView) {
-	views.push_back(aView);
-}
-
-void TheGame::removeView(View* aView) {
-	views.erase(std::remove(views.begin(), views.end(), aView));
+	SDL_RemoveTimer(timerTick);
 }
 
 void TheGame::stop() {

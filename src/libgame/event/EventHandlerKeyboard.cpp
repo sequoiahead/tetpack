@@ -18,8 +18,3 @@ void EventHandlerKeyboard::bind(const SDLKey& aKeysym, Action* aAction) {
 	evt.keysym = ksm;
 	this->bind(evt, aAction);
 }
-
-bool operator<(const SDL_KeyboardEvent& aEvt1, const SDL_KeyboardEvent& aEvt2) {
-	return aEvt1.keysym.sym < aEvt2.keysym.sym;
-}
-
