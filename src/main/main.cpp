@@ -27,14 +27,14 @@ int main (int argc, char** argv) {
 
 	ActionMethod<View> actionViewRender(&screen, &View::render);
 
-	EventHandlerAction<SDL_UserEvent> handlerUserEvent(SDL_USEREVENT);
-	handlerUserEvent.bind(TheGame::getTickEvent(), &actionViewRender);
+	EventHandlerAction<SDL_ExposeEvent> handlerRedrawEvent(SDL_VIDEOEXPOSE);
+	handlerRedrawEvent.bind(TheGame::getTickEvent(), &actionViewRender);
 
 	EventHandlerAction<SDL_QuitEvent> handlerQuitEvent(SDL_QUIT);
 	handlerQuitEvent.bind(TheGame::getQuitEvent(), &actionQuit);
 
 	game.addEventHandler(&handlerKeyboard);
-	game.addEventHandler(&handlerUserEvent);
+	game.addEventHandler(&handlerRedrawEvent);
 	game.addEventHandler(&handlerQuitEvent);
 	game.start();
 

@@ -43,21 +43,16 @@ void TheGame::removeEventHandler(EventHandler* handler) {
 
 Uint32 TheGame::sendTick(Uint32 interval, void *param) {
 	SDL_Event evt;
-	evt.type = SDL_USEREVENT;
-	evt.user = TheGame::getTickEvent();
+	evt.type = SDL_VIDEOEXPOSE;
+	evt.expose = TheGame::getTickEvent();
 	SDL_PushEvent(&evt);
 	return interval;
 }
 
-SDL_UserEvent TheGame::getTickEvent() {
-	SDL_UserEvent userevent;
-
-	userevent.type = SDL_USEREVENT;
-	userevent.code = SDL_EVENT_TICK;
-	userevent.data1 = NULL;
-	userevent.data2 = NULL;
-
-	return userevent;
+SDL_ExposeEvent TheGame::getTickEvent() {
+	SDL_ExposeEvent event;
+	event.type = SDL_VIDEOEXPOSE;
+	return event;
 }
 
 SDL_QuitEvent TheGame::getQuitEvent() {

@@ -22,6 +22,11 @@ inline SDL_QuitEvent getExactEvent(const SDL_Event& aEvt) {
 	return aEvt.quit;
 }
 
+template<>
+inline SDL_ExposeEvent getExactEvent(const SDL_Event& aEvt) {
+	return aEvt.expose;
+}
+
 //stl containers compatibility
 //operator< implementation is mandatory, it's used for ordering
 //element inside actions map
@@ -34,6 +39,10 @@ inline bool operator<(const SDL_UserEvent& aEvt1, const SDL_UserEvent& aEvt2) {
 }
 
 inline bool operator<(const SDL_QuitEvent& aEvt1, const SDL_QuitEvent& aEvt2) {
+	return aEvt1.type < aEvt2.type;
+}
+
+inline bool operator<(const SDL_ExposeEvent& aEvt1, const SDL_ExposeEvent& aEvt2) {
 	return aEvt1.type < aEvt2.type;
 }
 

@@ -19,8 +19,7 @@ public:
 	void start();
 	void stop();
 
-	static Uint32 sendTick(Uint32 interval, void *param);
-	static SDL_UserEvent getTickEvent();
+	static SDL_ExposeEvent getTickEvent();
 	static SDL_QuitEvent getQuitEvent();
 
 private:
@@ -30,6 +29,8 @@ private:
 
 	RegistryHandlers handlers;
 	bool isRunning;
+
+	static Uint32 sendTick(Uint32 interval, void *param);
 
 	//noncopyable
 	TheGame(const TheGame&);
