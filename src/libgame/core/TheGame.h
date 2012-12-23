@@ -7,6 +7,14 @@
 
 #include "libgame/event/EventHandler.h"
 
+#ifndef PATH_RESOURCES
+#error "PATH_RESOURCES is not defined"
+#endif
+
+#define TO_STRING1(x) #x
+#define TO_STRING(x) TO_STRING1(x)
+#define PATH_RESOURCES_STR TO_STRING(PATH_RESOURCES)
+
 const unsigned int SDL_EVENT_TICK = 1;
 
 class TheGame {

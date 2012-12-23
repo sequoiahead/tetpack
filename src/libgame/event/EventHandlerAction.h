@@ -6,7 +6,7 @@
 #include "libgame/util/sdl_compat.h"
 #include "libgame/action/Action.h"
 #include "libgame/event/EventHandler.h"
-#include "libgame/event/Exceptions.h"
+#include "libgame/event/EventExceptions.h"
 
 template<typename Event>
 class EventHandlerAction : public EventHandler {

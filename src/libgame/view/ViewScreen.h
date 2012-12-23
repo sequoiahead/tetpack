@@ -26,6 +26,8 @@ protected:
 
 	unsigned int lastTick;
 
+	virtual void prepareScreen(unsigned int deltaTime) =0;
+
 private:
 	//noncopyable
 	ViewScreen(const ViewScreen&);

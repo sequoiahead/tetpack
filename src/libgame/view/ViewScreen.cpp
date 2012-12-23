@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include <SDL/SDL_timer.h>
 
 #include "libgame/view/ViewScreen.h"
@@ -16,7 +14,7 @@ ViewScreen::~ViewScreen() {
 
 void ViewScreen::render() {
 	unsigned int ticks = SDL_GetTicks();
-	SDL_Flip(screen);
-	std::cout << "rendered at " << ticks << "(" << ticks - lastTick << ")" << std::endl;
+	prepareScreen(ticks - lastTick);
 	lastTick = ticks;
+	SDL_Flip(screen);
 }

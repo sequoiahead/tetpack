@@ -1,6 +1,6 @@
 #include <SDL/SDL_timer.h>
 
-#include "libgame/TheGame.h"
+#include "libgame/core/TheGame.h"
 
 TheGame::TheGame()
 		: isRunning(false) {
