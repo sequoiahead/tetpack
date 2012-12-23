@@ -1,13 +1,17 @@
 #include <iostream>
+#include <stdexcept>
+#include <string>
 
 #include "view/TetPackView.h"
 
-TetPackView::TetPackView() {
+TetPackView::TetPackView(ResourceManager& aResMan)
+		: resMan(aResMan) {
+	lMino = resMan.get<ResourceImage>("L.png");
 }
 
 TetPackView::~TetPackView() {
 }
 
-void TetPackView::render() {
-	std::cout << "rendered" << std::endl;
+void TetPackView::prepareScreen(unsigned int deltaTime) {
+	SDL_BlitSurface(*lMino, NULL, screen, NULL);
 }

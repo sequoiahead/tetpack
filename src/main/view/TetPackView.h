@@ -2,13 +2,22 @@
 #define TETPACKVIEW_H_
 
 #include <libgame/view/ViewScreen.h>
+#include <libgame/resource/ResourceImage.h>
+#include <libgame/resource/ResourceManager.h>
 
-class TetPackView: public ViewScreen {
+#include <SDL/SDL_image.h>
+
+class TetPackView : public ViewScreen {
 public:
-	TetPackView();
+	explicit TetPackView(ResourceManager&);
 	virtual ~TetPackView();
 
-	virtual void render();
+protected:
+	virtual void prepareScreen(unsigned int);
+
+private:
+	ResourceManager resMan;
+	ResourceImage* lMino;
 };
 
 #endif /* TETPACKVIEW_H_ */

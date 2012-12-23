@@ -1,0 +1,15 @@
+#include "libgame/resource/ResourceImage.h"
+#include "libgame/resource/ResourceExceptions.h"
+
+ResourceImage::ResourceImage(const std::string& aUrl)
+		: Resource(aUrl, IMAGE) {
+	surface = IMG_Load(aUrl.c_str());
+	if (NULL == surface) {
+		ResourceException e(aUrl, IMG_GetError());
+		throw e;
+	}
+}
+
+ResourceImage::~ResourceImage() {
+	SDL_FreeSurface(surface);
+}

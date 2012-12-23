@@ -4,11 +4,14 @@
 #include <libgame/view/ViewScreen.h>
 #include <libgame/event/EventHandlerKeyboard.h>
 #include <libgame/action/ActionLogging.h>
-#include <libgame/TheGame.h>
+#include <libgame/core/TheGame.h>
+
+#include "view/TetPackView.h"
 
 int main (int argc, char** argv) {
 	TheGame game;
-	ViewScreen screen;
+	ResourceManager resMan("res/");
+	TetPackView screen(resMan);
 
 	ActionMethod<TheGame> actionQuit(&game, &TheGame::stop);
 
