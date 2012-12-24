@@ -10,8 +10,9 @@
 
 int main (int argc, char** argv) {
 	TheGame game;
-	ResourceManager resMan("res/");
-	TetPackView screen(resMan);
+	ResourceManager<ResourceImage> resMan("res/");
+	GameBoard board;
+	TetPackView screen(&resMan, &board);
 
 	ActionMethod<TheGame> actionQuit(&game, &TheGame::stop);
 

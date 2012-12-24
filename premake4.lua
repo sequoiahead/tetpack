@@ -27,20 +27,20 @@ solution "tetpack"
 		targetname "tetpack"
 		includedirs { "src/", "src/main/" }
 		files { "src/main/**.cpp" }
-		links { "game", "SDL" }
+		links { "game", "SDL", "SDL_image" }
 		
 	project "game" 
 		kind "StaticLib"
 		language "C++"
 		includedirs { "src/" }
 		files { "src/libgame/**.cpp" }
-		links { "SDL", "boost" }
+		links { "SDL" }
 		
---	configuration { "debug" }
---		targetdir (DIR_LIB_DEBUG)
---		
---	configuration { "release" }
---		targetdir (DIR_LIB_RELEASE)
+	configuration { "debug" }
+		targetdir (DIR_LIB_DEBUG)
+		
+	configuration { "release" }
+		targetdir (DIR_LIB_RELEASE)
 	
 	project "test_libgame"
 		kind "ConsoleApp"

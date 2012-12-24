@@ -10,13 +10,13 @@ public:
 	explicit ResourceImage(const std::string&);
 	virtual ~ResourceImage();
 
-	operator SDL_Surface* ();
+	operator SDL_Surface* () const;
 
 protected:
 	SDL_Surface* surface;
 };
 
-inline ResourceImage::operator SDL_Surface* () {
+inline ResourceImage::operator SDL_Surface* () const {
 	return surface;
 }
 
