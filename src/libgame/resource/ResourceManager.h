@@ -62,6 +62,7 @@ ResourceManager<ResourceType>::~ResourceManager() {
 	}
 	IMG_Quit();
 }
+
 template<typename ResourceType>
 bool ResourceManager<ResourceType>::release(Resource* res) {
 	ResourcePoolIt toDelete = pool.find(res->getUrl());

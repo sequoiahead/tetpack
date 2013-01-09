@@ -4,7 +4,11 @@
 class Action {
 public:
 	virtual void invoke() =0;
+	virtual ~Action();
 };
+
+inline Action::~Action() {
+}
 
 template<typename T>
 class ActionAbstract : public Action {
@@ -28,7 +32,7 @@ inline ActionAbstract<T>::~ActionAbstract() {
 }
 
 template<typename T>
-class ActionMethod : public ActionAbstract<T> {
+class ActionMethod : public Action {
 public:
 	typedef void (T::*MethodPtr)();
 
@@ -38,12 +42,13 @@ public:
 	virtual void invoke();
 
 protected:
+	T* instance;
 	MethodPtr method;
 };
 
 template<typename T>
-inline ActionMethod<T>::ActionMethod(T* const aTarget, MethodPtr aPtrMethod)
-		: ActionAbstract<T>(aTarget), method(aPtrMethod) {
+inline ActionMethod<T>::ActionMethod(T* const aInstance, MethodPtr aPtrMethod)
+		: instance(aInstance), method(aPtrMethod) {
 }
 
 template<typename T>
@@ -52,7 +57,7 @@ inline ActionMethod<T>::~ActionMethod() {
 
 template<typename T>
 inline void ActionMethod<T>::invoke() {
-	(this->target->*method)();
+	(instance->*method)();
 }
 
 class ActionFunction : public Action {
