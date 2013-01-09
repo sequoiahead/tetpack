@@ -6,7 +6,7 @@ DIR_LIB_RELEASE = DIR_TARGET .. "/release/lib"
 
 solution "tetpack"
 	configurations { "debug", "release" }
-	flags { "FatalWarnings", "ExtraWarnings" }
+	flags { "FatalWarnings", "ExtraWarnings", "NoRTTI" }
 	location (DIR_TARGET)
 	
 	configuration { "debug" }
