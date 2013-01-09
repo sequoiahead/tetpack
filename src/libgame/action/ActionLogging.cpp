@@ -3,12 +3,12 @@
 #include "libgame/action/ActionLogging.h"
 
 ActionLogging::ActionLogging(const char* aMsg)
-		: ActionAbstract(aMsg) {
+		: msg(aMsg) {
 }
 
 ActionLogging::~ActionLogging() {
 }
 
 void ActionLogging::invoke() {
-	std::cout << target << std::endl;
+	std::cout << msg << std::endl;
 }

@@ -11,27 +11,6 @@ inline Action::~Action() {
 }
 
 template<typename T>
-class ActionAbstract : public Action {
-public:
-	explicit ActionAbstract(T* const);
-	virtual ~ActionAbstract();
-
-	virtual void invoke() =0;
-
-protected:
-	T* const target;
-};
-
-template<typename T>
-inline ActionAbstract<T>::ActionAbstract(T* const aTarget)
-	: target(aTarget) {
-}
-
-template<typename T>
-inline ActionAbstract<T>::~ActionAbstract() {
-}
-
-template<typename T>
 class ActionMethod : public Action {
 public:
 	typedef void (T::*MethodPtr)();
