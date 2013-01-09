@@ -6,28 +6,26 @@
 #include <libgame/resource/ResourceManager.h>
 
 #include "domain/GameBoard.h"
-#include "domain/Tetromino.h"
 
 #include <SDL/SDL_image.h>
 
-class TetPackView : public ViewScreen {
+class ViewGameBoard : public ViewScreen {
 public:
-	explicit TetPackView(ResourceManager<ResourceImage>*, GameBoard*);
-	virtual ~TetPackView();
+	explicit ViewGameBoard(ResourceManager<ResourceImage>*, const GameBoard*);
+	virtual ~ViewGameBoard();
 
 protected:
 	virtual void prepareScreen(unsigned int);
 
 private:
 	ResourceManager<ResourceImage>* imgMan;
-	GameBoard* board;
-	ResourceImage* minos[MINO_LAST];
-
-	const char * minosImgs[MINO_LAST];
+	const GameBoard* board;
+	ResourceImage* minos[Tetromino::_LAST];
+	const char* minosImgs[Tetromino::_LAST];
 
 	//noncopyable
-	TetPackView(const TetPackView&);
-	const TetPackView& operator=(const TetPackView&);
+	ViewGameBoard(const ViewGameBoard&);
+	const ViewGameBoard& operator=(const ViewGameBoard&);
 };
 
 #endif /* TETPACKVIEW_H_ */

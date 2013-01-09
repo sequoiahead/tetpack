@@ -1,30 +1,43 @@
 #ifndef TETROMINO_H_
 #define TETROMINO_H_
 
-enum TetrominoType {
-	MINO_I = 0,
-	MINO_J,
-	MINO_L,
-	MINO_O,
-	MINO_S,
-	MINO_T,
-	MINO_Z,
-	MINO_LAST
-};
+#include <list>
 
 class Tetromino {
 public:
+	enum Type {
+		I = 0,
+		J,
+		L,
+		O,
+		S,
+		T,
+		Z,
+		_LAST
+	};
+
+	enum Direction {
+		DIR_UP = 0,
+		DIR_RIGHT,
+		DIR_DOWN,
+		DIR_LEFT,
+		_DIR_LAST
+	};
+
+	explicit Tetromino(Type);
 	virtual ~Tetromino();
 
-	TetrominoType getType() const;
+	Type getType() const;
+	void rotate();
 
-protected:
-	explicit Tetromino(TetrominoType);
+	void reset();
 
-	TetrominoType type;
+private:
+	Type type;
+	Direction dir;
 };
 
-inline TetrominoType Tetromino::getType() const {
+inline Tetromino::Type Tetromino::getType() const {
 	return type;
 }
 

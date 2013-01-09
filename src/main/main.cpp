@@ -6,28 +6,28 @@
 #include <libgame/action/ActionLogging.h>
 #include <libgame/core/TheGame.h>
 
-#include "view/TetPackView.h"
+#include "view/ViewGameBoard.h"
+
+#include <iostream>
 
 int main (int argc, char** argv) {
 	TheGame game;
 	ResourceManager<ResourceImage> resMan("res/");
 	GameBoard board;
-	TetPackView screen(&resMan, &board);
+	ViewGameBoard screen(&resMan, &board);
 
 	ActionMethod<TheGame> actionQuit(&game, &TheGame::stop);
-
-	ActionLogging actionLoggingEsc("Escape");
-	ActionLogging actionLoggingLeft("Left");
-	ActionLogging actionLoggingRight("Right");
-	ActionLogging actionLoggingUp("Up");
-	ActionLogging actionLoggingDown("Down");
+	ActionMethod<GameBoard> actionRotate(&board, &GameBoard::rotate);
+	ActionMethod<GameBoard> actionDrop(&board, &GameBoard::drop);
+	ActionMethod<GameBoard> actionLeft(&board, &GameBoard::left);
+	ActionMethod<GameBoard> actionRight(&board, &GameBoard::right);
 
 	EventHandlerKeyboard handlerKeyboard;
-	handlerKeyboard.bind(SDLK_ESCAPE, &actionLoggingEsc);
-	handlerKeyboard.bind(SDLK_LEFT, &actionLoggingLeft);
-	handlerKeyboard.bind(SDLK_RIGHT, &actionLoggingRight);
-	handlerKeyboard.bind(SDLK_UP, &actionLoggingUp);
-	handlerKeyboard.bind(SDLK_DOWN, &actionLoggingDown);
+	handlerKeyboard.bind(SDLK_ESCAPE, &actionQuit);
+	handlerKeyboard.bind(SDLK_LEFT, &actionLeft);
+	handlerKeyboard.bind(SDLK_RIGHT, &actionRight);
+	handlerKeyboard.bind(SDLK_UP, &actionRotate);
+	handlerKeyboard.bind(SDLK_DOWN, &actionDrop);
 
 	ActionMethod<View> actionViewRender(&screen, &View::render);
 

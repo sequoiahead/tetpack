@@ -1,18 +1,34 @@
-/*
- * GameBoard.cpp
- *
- *  Created on: Dec 21, 2012
- *      Author: sequoiahead
- */
-
-#include "GameBoard.h"
+#include "domain/GameBoard.h"
 
 GameBoard::GameBoard() {
-	// TODO Auto-generated constructor stub
-
+	std::srand(std::time(0));
+	for (int i = 0; i < Tetromino::_LAST; i++) {
+		minos[i] = new Tetromino(static_cast<Tetromino::Type>(i));
+	}
+	currentMino = randomMino();
+	nextMino = randomMino();
 }
 
 GameBoard::~GameBoard() {
-	// TODO Auto-generated destructor stub
+	for (int i = 0; i < Tetromino::_LAST; i++) {
+		delete minos[i];
+	}
 }
 
+Tetromino::Type GameBoard::randomMino() {
+	return static_cast<Tetromino::Type>(std::rand() % Tetromino::_LAST);
+}
+
+void GameBoard::rotate() {
+	getCurrentMino().rotate();
+	currentMino = randomMino();
+}
+
+void GameBoard::left() {
+}
+
+void GameBoard::right() {
+}
+
+void GameBoard::drop() {
+}
