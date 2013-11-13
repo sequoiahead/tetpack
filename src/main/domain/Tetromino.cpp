@@ -1,20 +1,25 @@
 #include "Tetromino.h"
 
 Tetromino::Tetromino(Tetromino::Type aType)
-		: type(aType), dir(DIR_UP) {
+		: type(aType), dir(DIR_UP), x(0), y(0) {
 }
 
 Tetromino::~Tetromino() {
 }
 
-void Tetromino::rotate() {
-	int intDir = static_cast<int>(dir);
-	dir = static_cast<Direction>(++intDir);
-	if (dir == _DIR_LAST) {
-		dir = DIR_UP;
+void Tetromino::rotate(Direction aDir) {
+	if (aDir != _DIR_LAST) {
+		dir = aDir;
+	} else {
+		int intDir = static_cast<int>(dir);
+		dir = static_cast<Direction>(++intDir);
+		if (dir == _DIR_LAST) {
+			dir = static_cast<Direction>(0);
+		}
 	}
 }
 
-void Tetromino::reset() {
-	dir = DIR_UP;
+void Tetromino::move(unsigned int aX, unsigned int aY) {
+	x = aX;
+	y = aY;
 }

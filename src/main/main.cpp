@@ -1,8 +1,10 @@
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_events.h>
 
 #include <libgame/util/sdl_compat.h>
 #include <libgame/view/ViewScreen.h>
 #include <libgame/event/EventHandlerKeyboard.h>
+#include <libgame/event/EventHandlerWindow.h>
 #include <libgame/action/ActionLogging.h>
 #include <libgame/core/TheGame.h>
 
@@ -14,25 +16,26 @@ int main (int argc, char** argv) {
 	TheGame game;
 	ResourceManager<ResourceImage> resMan("res/");
 	GameBoard board;
-	ViewGameBoard screen(&resMan, &board);
+	Well well = board.getWell();
+	ViewGameBoard screen(&resMan, &well);
 
 	ActionMethod<TheGame> actionQuit(&game, &TheGame::stop);
-	ActionMethod<GameBoard> actionRotate(&board, &GameBoard::rotate);
-	ActionMethod<GameBoard> actionDrop(&board, &GameBoard::drop);
-	ActionMethod<GameBoard> actionLeft(&board, &GameBoard::left);
-	ActionMethod<GameBoard> actionRight(&board, &GameBoard::right);
+	ActionMethod<Well> actionRotate(&well, &Well::rotate);
+	ActionMethod<Well> actionDrop(&well, &Well::drop);
+	ActionMethod<Well> actionLeft(&well, &Well::left);
+	ActionMethod<Well> actionRight(&well, &Well::right);
 
 	EventHandlerKeyboard handlerKeyboard;
-	handlerKeyboard.bind(SDLK_ESCAPE, &actionQuit);
-	handlerKeyboard.bind(SDLK_LEFT, &actionLeft);
-	handlerKeyboard.bind(SDLK_RIGHT, &actionRight);
-	handlerKeyboard.bind(SDLK_UP, &actionRotate);
-	handlerKeyboard.bind(SDLK_DOWN, &actionDrop);
+	handlerKeyboard.bind(SDL_SCANCODE_ESCAPE, &actionQuit);
+	handlerKeyboard.bind(SDL_SCANCODE_LEFT, &actionLeft);
+	handlerKeyboard.bind(SDL_SCANCODE_RIGHT, &actionRight);
+	handlerKeyboard.bind(SDL_SCANCODE_UP, &actionRotate);
+	handlerKeyboard.bind(SDL_SCANCODE_DOWN, &actionDrop);
 
-	ActionMethod<View> actionViewRender(&screen, &View::render);
+	ActionMethod<ViewGameBoard> actionViewRender(&screen, &ViewGameBoard::render);
 
-	EventHandlerAction<SDL_ExposeEvent> handlerRedrawEvent(SDL_VIDEOEXPOSE);
-	handlerRedrawEvent.bind(TheGame::getTickEvent(), &actionViewRender);
+	EventHandlerWindow handlerRedrawEvent;
+	handlerRedrawEvent.bind(SDL_WINDOWEVENT_EXPOSED, &actionViewRender);
 
 	EventHandlerAction<SDL_QuitEvent> handlerQuitEvent(SDL_QUIT);
 	handlerQuitEvent.bind(TheGame::getQuitEvent(), &actionQuit);

@@ -9,6 +9,9 @@ solution "tetpack"
 	flags { "FatalWarnings", "ExtraWarnings", "NoRTTI" }
 	location (DIR_TARGET)
 	
+	configuration { "linux" , "gmake" }
+		buildoptions { "-std=c++11" } 
+	
 	configuration { "debug" }
 		defines { "_DEBUG" }
 		flags { "Symbols" }
@@ -27,14 +30,14 @@ solution "tetpack"
 		targetname "tetpack"
 		includedirs { "src/", "src/main/" }
 		files { "src/main/**.cpp" }
-		links { "game", "SDL", "SDL_image" }
+		links { "game", "SDL2", "SDL2_image" }
 		
 	project "game" 
 		kind "StaticLib"
 		language "C++"
 		includedirs { "src/" }
 		files { "src/libgame/**.cpp" }
-		links { "SDL" }
+		links { "SDL2" }
 		
 	configuration { "debug" }
 		targetdir (DIR_LIB_DEBUG)
@@ -47,7 +50,7 @@ solution "tetpack"
 		language "C++"
 		includedirs { "src/" }
 		files { "src/test/**.cpp" }
-		links { "game", "cppunit", "SDL" }
+		links { "game", "cppunit", "SDL2" }
 		
 if _ACTION == "clean" then
 	os.rmdir(DIR_TARGET)

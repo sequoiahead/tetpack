@@ -3,7 +3,7 @@
 
 class Action {
 public:
-	virtual void invoke() =0;
+	virtual void invoke() = 0;
 	virtual ~Action();
 };
 
@@ -40,6 +40,7 @@ inline void ActionMethod<T>::invoke() {
 }
 
 class ActionFunction : public Action {
+public:
 	typedef void (*FuncPtr)();
 
 	explicit ActionFunction(FuncPtr);

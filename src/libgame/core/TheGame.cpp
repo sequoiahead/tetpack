@@ -1,4 +1,5 @@
-#include <SDL/SDL_timer.h>
+#include <SDL2/SDL_timer.h>
+#include <iostream>
 
 #include "libgame/core/TheGame.h"
 
@@ -20,6 +21,9 @@ void TheGame::start() {
 	while (isRunning) {
 		if (!SDL_PollEvent(&event)) {
 			continue;
+		}
+		if (event.type == SDL_WINDOWEVENT) {
+			std::cout << event.window.event << std::endl;
 		}
 		hndl = handlers.find(static_cast<SDL_EventType>(event.type));
 		if (hndl != handlers.end()) {
@@ -43,16 +47,13 @@ void TheGame::removeEventHandler(EventHandler* handler) {
 
 Uint32 TheGame::sendTick(Uint32 interval, void *param) {
 	SDL_Event evt;
-	evt.type = SDL_VIDEOEXPOSE;
-	evt.expose = TheGame::getTickEvent();
+	SDL_WindowEvent wEvt;
+	evt.type = SDL_WINDOWEVENT;
+	wEvt.type = SDL_WINDOWEVENT;
+	wEvt.event = SDL_WINDOWEVENT_EXPOSED;
+	evt.window = wEvt;
 	SDL_PushEvent(&evt);
 	return interval;
-}
-
-SDL_ExposeEvent TheGame::getTickEvent() {
-	SDL_ExposeEvent event;
-	event.type = SDL_VIDEOEXPOSE;
-	return event;
 }
 
 SDL_QuitEvent TheGame::getQuitEvent() {

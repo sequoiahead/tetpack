@@ -1,3 +1,5 @@
+#include <SDL2/SDL_video.h>
+
 #include "libgame/resource/ResourceImage.h"
 #include "libgame/resource/ResourceExceptions.h"
 
@@ -6,6 +8,10 @@ ResourceImage::ResourceImage(const std::string& aUrl)
 	surface = IMG_Load(aUrl.c_str());
 	if (NULL == surface) {
 		ResourceException e(aUrl, IMG_GetError());
+		throw e;
+	}
+	if (NULL == surface) {
+		ResourceException e(aUrl, "Conversion into display format has failed");
 		throw e;
 	}
 }

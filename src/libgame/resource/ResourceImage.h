@@ -1,7 +1,7 @@
 #ifndef RESOURCEIMAGE_H_
 #define RESOURCEIMAGE_H_
 
-#include <SDL/SDL_image.h>
+#include <SDL2/SDL_image.h>
 
 #include "libgame/resource/Resource.h"
 

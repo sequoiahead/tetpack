@@ -28,13 +28,15 @@ public:
 	virtual ~Tetromino();
 
 	Type getType() const;
-	void rotate();
-
-	void reset();
+	void rotate(Direction aDir = _DIR_LAST);
+	void move(unsigned int, unsigned int);
 
 private:
 	Type type;
 	Direction dir;
+
+	unsigned int x;
+	unsigned int y;
 };
 
 inline Tetromino::Type Tetromino::getType() const {

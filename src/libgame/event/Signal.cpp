@@ -13,6 +13,16 @@ bool Signal::detach(Action* const action) const {
 	return somethingToDetach;
 }
 
+void Signal::attach(void (*aSlot)()) const {
+	ActionFunction* action = new ActionFunction(aSlot);
+	attach(action);
+}
+
+void Signal::detach(void (*aSlot)()) const {
+	ActionFunction action(aSlot);
+	detach(&action);
+}
+
 void Signal::emit() {
 	for(SlotsIt it = slots.begin(); it != slots.end(); it ++) {
 		(*it)->invoke();

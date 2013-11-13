@@ -1,5 +1,5 @@
-#ifndef TETPACKVIEW_H_
-#define TETPACKVIEW_H_
+#ifndef VIEWGAMEBOARD_H_
+#define VIEWGAMEBOARD_H_
 
 #include <libgame/view/ViewScreen.h>
 #include <libgame/resource/ResourceImage.h>
@@ -7,11 +7,11 @@
 
 #include "domain/GameBoard.h"
 
-#include <SDL/SDL_image.h>
+#include <SDL2/SDL_image.h>
 
 class ViewGameBoard : public ViewScreen {
 public:
-	explicit ViewGameBoard(ResourceManager<ResourceImage>*, const GameBoard*);
+	explicit ViewGameBoard(ResourceManager<ResourceImage>*, const Well*);
 	virtual ~ViewGameBoard();
 
 protected:
@@ -19,7 +19,7 @@ protected:
 
 private:
 	ResourceManager<ResourceImage>* imgMan;
-	const GameBoard* board;
+	const Well* well;
 	ResourceImage* minos[Tetromino::_LAST];
 	const char* minosImgs[Tetromino::_LAST];
 
@@ -28,4 +28,4 @@ private:
 	const ViewGameBoard& operator=(const ViewGameBoard&);
 };
 
-#endif /* TETPACKVIEW_H_ */
+#endif /* VIEWGAMEBOARD_H_ */

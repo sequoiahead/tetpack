@@ -1,7 +1,8 @@
 #ifndef VIEWSCREEN_H_
 #define VIEWSCREEN_H_
 
-#include <SDL/SDL_video.h>
+#include <SDL2/SDL_video.h>
+#include <SDL2/SDL_render.h>
 
 #include "libgame/view/View.h"
 
@@ -18,7 +19,8 @@ public:
 	virtual void render();
 
 protected:
-	SDL_Surface* screen;
+	SDL_Window *window;
+	SDL_Renderer *renderer;
 
 	unsigned int width;
 	unsigned int height;

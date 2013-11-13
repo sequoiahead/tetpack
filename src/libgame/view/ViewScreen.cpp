@@ -1,20 +1,25 @@
-#include <SDL/SDL_timer.h>
+#include <SDL2/SDL_timer.h>
+#include <SDL2/SDL_render.h>
+#include <iostream>
 
 #include "libgame/view/ViewScreen.h"
 
 ViewScreen::ViewScreen(unsigned int aWidth, unsigned int aHeight, unsigned int aBpp)
 		: width(aWidth), height(aHeight), bpp(aBpp), lastTick(SDL_GetTicks()) {
 
-	screen = SDL_SetVideoMode(width, height, bpp, SDL_SWSURFACE | SDL_DOUBLEBUF);
+	SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_INPUT_FOCUS, &window, &renderer);
 }
 
 ViewScreen::~ViewScreen() {
-	SDL_FreeSurface(screen);
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
 }
 
 void ViewScreen::render() {
+	std::cout << "render" << std::endl;
 	unsigned int ticks = SDL_GetTicks();
+	SDL_RenderClear(renderer);
 	prepareScreen(ticks - lastTick);
 	lastTick = ticks;
-	SDL_Flip(screen);
+	SDL_RenderPresent(renderer);
 }

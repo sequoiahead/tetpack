@@ -1,7 +1,7 @@
 #ifndef SDL_COMPAT_H_
 #define SDL_COMPAT_H_
 
-#include <SDL/SDL_events.h>
+#include <SDL2/SDL_events.h>
 
 //conversion functions
 template<typename Event>
@@ -23,8 +23,8 @@ inline SDL_QuitEvent getExactEvent(const SDL_Event& aEvt) {
 }
 
 template<>
-inline SDL_ExposeEvent getExactEvent(const SDL_Event& aEvt) {
-	return aEvt.expose;
+inline SDL_WindowEvent getExactEvent(const SDL_Event& aEvt) {
+	return aEvt.window;
 }
 
 //stl containers compatibility
@@ -42,8 +42,8 @@ inline bool operator<(const SDL_QuitEvent& aEvt1, const SDL_QuitEvent& aEvt2) {
 	return aEvt1.type < aEvt2.type;
 }
 
-inline bool operator<(const SDL_ExposeEvent& aEvt1, const SDL_ExposeEvent& aEvt2) {
-	return aEvt1.type < aEvt2.type;
+inline bool operator<(const SDL_WindowEvent& aEvt1, const SDL_WindowEvent& aEvt2) {
+	return aEvt1.event < aEvt2.event;
 }
 
 #endif /* SDL_COMPAT_H_ */

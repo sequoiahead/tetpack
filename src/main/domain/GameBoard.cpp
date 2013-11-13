@@ -7,28 +7,16 @@ GameBoard::GameBoard() {
 	}
 	currentMino = randomMino();
 	nextMino = randomMino();
+	well = new Well(this);
 }
 
 GameBoard::~GameBoard() {
 	for (int i = 0; i < Tetromino::_LAST; i++) {
 		delete minos[i];
 	}
+	delete well;
 }
 
 Tetromino::Type GameBoard::randomMino() {
 	return static_cast<Tetromino::Type>(std::rand() % Tetromino::_LAST);
-}
-
-void GameBoard::rotate() {
-	getCurrentMino().rotate();
-	currentMino = randomMino();
-}
-
-void GameBoard::left() {
-}
-
-void GameBoard::right() {
-}
-
-void GameBoard::drop() {
 }

@@ -3,7 +3,7 @@
 
 #include <map>
 #include <vector>
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 #include "libgame/event/EventHandler.h"
 
@@ -19,7 +19,6 @@ public:
 	void start();
 	void stop();
 
-	static SDL_ExposeEvent getTickEvent();
 	static SDL_QuitEvent getQuitEvent();
 
 private:

@@ -2,6 +2,7 @@
 #define EVENTHANDLERABSTRACT_H_
 
 #include <map>
+#include <iostream>
 
 #include "libgame/util/sdl_compat.h"
 #include "libgame/action/Action.h"

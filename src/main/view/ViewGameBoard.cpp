@@ -1,11 +1,9 @@
 #include <iostream>
-#include <stdexcept>
-#include <string>
 
 #include "view/ViewGameBoard.h"
 
-ViewGameBoard::ViewGameBoard(ResourceManager<ResourceImage>* aImgMan, const GameBoard* aBoard)
-		: imgMan(aImgMan), board(aBoard) {
+ViewGameBoard::ViewGameBoard(ResourceManager<ResourceImage>* aImgMan, const Well* aBoard)
+		: imgMan(aImgMan), well(aBoard) {
 	minosImgs[Tetromino::I] = "I.png";
 	minosImgs[Tetromino::J] = "J.png";
 	minosImgs[Tetromino::L] = "L.png";
@@ -23,5 +21,7 @@ ViewGameBoard::~ViewGameBoard() {
 }
 
 void ViewGameBoard::prepareScreen(unsigned int deltaTime) {
-	SDL_BlitSurface(*minos[board->getCurrentMino().getType()], NULL, screen, NULL);
+	Tetromino mino = well->getCurrentMino();
+//	SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
+//	SDL_BlitSurface(*minos[mino.getType()], NULL, screen, NULL);
 }

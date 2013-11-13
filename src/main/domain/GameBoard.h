@@ -4,28 +4,27 @@
 #include <cstdlib>
 #include <ctime>
 
-#include <libgame/event/Signal.h>
-
 #include "domain/Tetromino.h"
+#include "domain/TetrominoFactory.h"
+#include "domain/Well.h"
 
-class GameBoard {
+class GameBoard : public TetrominoFactory {
 public:
 	GameBoard();
 	~GameBoard();
 
-	const Tetromino& getCurrentMino() const;
-	const Tetromino& getNextMino() const;
+	const Well& getWell() const;
 
-	void rotate();
-	void left();
-	void right();
-	void drop();
+	virtual Tetromino& getMino();
+
 private:
 	Tetromino* minos[Tetromino::_LAST];
+	Well* well;
 	Tetromino::Type currentMino;
 	Tetromino::Type nextMino;
 
 	Tetromino& getCurrentMino();
+	Tetromino& getNextMino();
 	Tetromino::Type randomMino();
 
 	//noncopyable
@@ -33,16 +32,22 @@ private:
 	const GameBoard& operator=(const GameBoard&);
 };
 
+inline Tetromino& GameBoard::getMino() {
+	currentMino = nextMino;
+	nextMino = randomMino();
+	return *minos[currentMino];
+}
+
 inline Tetromino& GameBoard::getCurrentMino() {
 	return *minos[currentMino];
 }
 
-inline const Tetromino& GameBoard::getCurrentMino() const {
-	return *minos[currentMino];
+inline Tetromino& GameBoard::getNextMino() {
+	return *minos[nextMino];
 }
 
-inline const Tetromino& GameBoard::getNextMino() const {
-	return *minos[nextMino];
+inline const Well& GameBoard::getWell() const {
+	return *well;
 }
 
 #endif /* GAMEBOARD_H_ */

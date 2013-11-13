@@ -1,8 +1,6 @@
 #include <iostream>
-#include <SDL/SDL_keysym.h>
 
 #include "libgame/event/EventHandlerKeyboard.h"
-#include "libgame/action/Action.h"
 
 EventHandlerKeyboard::EventHandlerKeyboard()
 		: EventHandlerAction<SDL_KeyboardEvent>(SDL_KEYDOWN) {
@@ -11,10 +9,10 @@ EventHandlerKeyboard::EventHandlerKeyboard()
 EventHandlerKeyboard::~EventHandlerKeyboard() {
 }
 
-void EventHandlerKeyboard::bind(const SDLKey& aKeysym, Action* aAction) {
+void EventHandlerKeyboard::bind(const SDL_Scancode& aScancode, Action* aAction) {
 	SDL_KeyboardEvent evt;
-	SDL_keysym ksm;
-	ksm.sym = aKeysym;
+	SDL_Keysym ksm;
+	ksm.scancode = aScancode;
 	evt.keysym = ksm;
 	this->bind(evt, aAction);
 }
