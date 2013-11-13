@@ -16,7 +16,6 @@ ViewScreen::~ViewScreen() {
 }
 
 void ViewScreen::render() {
-	std::cout << "render" << std::endl;
 	unsigned int ticks = SDL_GetTicks();
 	SDL_RenderClear(renderer);
 	prepareScreen(ticks - lastTick);

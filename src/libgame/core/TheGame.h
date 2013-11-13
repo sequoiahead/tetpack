@@ -5,35 +5,25 @@
 #include <vector>
 #include <SDL2/SDL.h>
 
-#include "libgame/event/EventHandler.h"
-
-const unsigned int SDL_EVENT_TICK = 1;
+#include "libgame/event/EventDispatcherInput.h"
 
 class TheGame {
 public:
+	TheGame(const TheGame&) = delete;
+	const TheGame& operator=(const TheGame&) = delete;
+
 	TheGame();
 	~TheGame();
 
-	void addEventHandler(EventHandler*);
-	void removeEventHandler(EventHandler*);
-	void start();
-	void stop();
+	EventDispatcherInput& getEventDispatcher();
 
-	static SDL_QuitEvent getQuitEvent();
+	void start();
+	void stop(SDL_Event&);
 
 private:
-	typedef std::pair<SDL_EventType, EventHandler*> RecordHandlers;
-	typedef std::map<SDL_EventType, EventHandler*> RegistryHandlers;
-	typedef RegistryHandlers::iterator RegistryHandlersIt;
-
-	RegistryHandlers handlers;
 	bool isRunning;
 
-	static Uint32 sendTick(Uint32 interval, void *param);
-
-	//noncopyable
-	TheGame(const TheGame&);
-	const TheGame& operator=(const TheGame&);
+	EventDispatcherInput evtDispatcherInput;
 };
 
 #endif /* THEGAME_H_ */
