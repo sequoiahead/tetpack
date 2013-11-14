@@ -1,11 +1,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
 #include <functional>
-#include <iostream>
 
-#include <libgame/util/sdl_compat.h>
-#include <libgame/view/ViewScreen.h>
-#include <libgame/action/ActionLogging.h>
 #include <libgame/core/TheGame.h>
 
 #include "view/ViewGameBoard.h"
@@ -17,8 +13,7 @@ int main (int argc, char** argv) {
 	Well well = board.getWell();
 	ViewGameBoard screen(&resMan, &well);
 
-	auto f = &TheGame::stop;
-	std::function<void(SDL_Event&)> ff = std::bind(f,&game,std::placeholders::_1);
+	std::function<void(SDL_Event&)> ff = std::bind(&TheGame::stop,&game,std::placeholders::_1);
 	game.getEventDispatcher().bind(SDL_KEYDOWN, SDL_SCANCODE_ESCAPE, ff);
 
 //	ActionMethod<TheGame> actionQuit(&game, &TheGame::stop);
