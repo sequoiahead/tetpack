@@ -2,6 +2,7 @@
 #define WELL_H_
 
 #include <iostream>
+#include <SDL2/SDL_events.h>
 #include <libgame/event/Signal.h>
 
 #include "domain/TetrominoFactory.h"
@@ -22,10 +23,10 @@ public:
 	const Signal<void()>& onRotate() const;
 	const Signal<void()>& onStuck() const;
 
-	void rotate();
-	void left();
-	void right();
-	void drop();
+	void rotate(SDL_Event&);
+	void left(SDL_Event&);
+	void right(SDL_Event&);
+	void drop(SDL_Event&);
 
 private:
 	Signal<void()> signalLineBurned;

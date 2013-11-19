@@ -18,11 +18,14 @@ int main(int argc, char** argv) {
 	ViewGameBoard screen(&resMan, &well);
 
 	game.getEventDispatcher().bind(SDL_KEYDOWN, SDL_SCANCODE_ESCAPE, std::bind(&TheGame::stop, &game, std::placeholders::_1));
+	game.getEventDispatcher().bind(SDL_KEYDOWN, SDL_SCANCODE_LEFT, std::bind(&Well::left, &well, std::placeholders::_1));
+	game.getEventDispatcher().bind(SDL_KEYDOWN, SDL_SCANCODE_RIGHT, std::bind(&Well::right, &well, std::placeholders::_1));
+	game.getEventDispatcher().bind(SDL_KEYDOWN, SDL_SCANCODE_UP, std::bind(&Well::rotate, &well, std::placeholders::_1));
+	game.getEventDispatcher().bind(SDL_KEYDOWN, SDL_SCANCODE_DOWN, std::bind(&Well::drop, &well, std::placeholders::_1));
 
 	game.onTick().connect<ViewGameBoard, &ViewGameBoard::render>(&screen);
 
 //	EventHandlerKeyboard handlerKeyboard;
-//	handlerKeyboard.bind(SDL_SCANCODE_ESCAPE, &actionQuit);
 //	handlerKeyboard.bind(SDL_SCANCODE_LEFT, &actionLeft);
 //	handlerKeyboard.bind(SDL_SCANCODE_RIGHT, &actionRight);
 //	handlerKeyboard.bind(SDL_SCANCODE_UP, &actionRotate);
