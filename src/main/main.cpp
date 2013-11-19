@@ -10,23 +10,17 @@
 
 #include "view/ViewGameBoard.h"
 
-int main (int argc, char** argv) {
+int main(int argc, char** argv) {
 	TheGame game;
 	ResourceManager<ResourceImage> resMan("res/");
 	GameBoard board;
 	Well well = board.getWell();
 	ViewGameBoard screen(&resMan, &well);
 
-	auto f = &TheGame::stop;
-	std::function<void(SDL_Event&)> ff = std::bind(f,&game,std::placeholders::_1);
-	game.getEventDispatcher().bind(SDL_KEYDOWN, SDL_SCANCODE_ESCAPE, ff);
+	game.getEventDispatcher().bind(SDL_KEYDOWN, SDL_SCANCODE_ESCAPE, std::bind(&TheGame::stop, &game, std::placeholders::_1));
 
-//	ActionMethod<TheGame> actionQuit(&game, &TheGame::stop);
-//	ActionMethod<Well> actionRotate(&well, &Well::rotate);
-//	ActionMethod<Well> actionDrop(&well, &Well::drop);
-//	ActionMethod<Well> actionLeft(&well, &Well::left);
-//	ActionMethod<Well> actionRight(&well, &Well::right);
-//
+	game.onTick().connect<ViewGameBoard, &ViewGameBoard::render>(&screen);
+
 //	EventHandlerKeyboard handlerKeyboard;
 //	handlerKeyboard.bind(SDL_SCANCODE_ESCAPE, &actionQuit);
 //	handlerKeyboard.bind(SDL_SCANCODE_LEFT, &actionLeft);

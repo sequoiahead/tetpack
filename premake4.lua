@@ -10,7 +10,7 @@ solution "tetpack"
 	location (DIR_TARGET)
 	
 	configuration { "linux" , "gmake" }
-		buildoptions { "-std=c++11" } 
+		buildoptions { "-std=c++11 -pedantic" } 
 	
 	configuration { "debug" }
 		defines { "_DEBUG" }

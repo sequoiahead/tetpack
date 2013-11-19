@@ -20,8 +20,14 @@ ViewGameBoard::ViewGameBoard(ResourceManager<ResourceImage>* aImgMan, const Well
 ViewGameBoard::~ViewGameBoard() {
 }
 
-void ViewGameBoard::prepareScreen(unsigned int deltaTime) {
+void ViewGameBoard::render() {
+	ViewScreen::render();
+}
+
+void ViewGameBoard::prepareScreen(uint32_t deltaTime) {
+	std::cout << "prepare at " << deltaTime << std::endl;
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	Tetromino mino = well->getCurrentMino();
-//	SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
-//	SDL_BlitSurface(*minos[mino.getType()], NULL, screen, NULL);
+	SDL_Texture* txMino = SDL_CreateTextureFromSurface(renderer,*minos[mino.getType()]);
+	SDL_RenderCopy(renderer, txMino, NULL, NULL);
 }

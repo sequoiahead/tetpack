@@ -7,12 +7,14 @@
 
 #include "domain/GameBoard.h"
 
-#include <SDL2/SDL_image.h>
-
 class ViewGameBoard : public ViewScreen {
 public:
 	explicit ViewGameBoard(ResourceManager<ResourceImage>*, const Well*);
 	virtual ~ViewGameBoard();
+	ViewGameBoard(const ViewGameBoard&) = delete;
+	const ViewGameBoard& operator=(const ViewGameBoard&) = delete;
+
+	void render();
 
 protected:
 	virtual void prepareScreen(unsigned int);
@@ -22,10 +24,6 @@ private:
 	const Well* well;
 	ResourceImage* minos[Tetromino::_LAST];
 	const char* minosImgs[Tetromino::_LAST];
-
-	//noncopyable
-	ViewGameBoard(const ViewGameBoard&);
-	const ViewGameBoard& operator=(const ViewGameBoard&);
 };
 
 #endif /* VIEWGAMEBOARD_H_ */

@@ -10,9 +10,9 @@ public:
 	EventDispatcherInput();
 	virtual ~EventDispatcherInput();
 
-	void bind(SDL_EventType, std::function<void(SDL_Event&)>&);
-	void bind(SDL_EventType, SDL_Scancode, std::function<void(SDL_Event&)>&);
-	void bind(SDL_EventType, SDL_Scancode, SDL_Keymod, std::function<void(SDL_Event&)>&);
+	void bind(SDL_EventType, std::function<void(SDL_Event&)>);
+	void bind(SDL_EventType, SDL_Scancode, std::function<void(SDL_Event&)>);
+	void bind(SDL_EventType, SDL_Scancode, SDL_Keymod, std::function<void(SDL_Event&)>);
 
 	void dispatch(SDL_Event&) const;
 

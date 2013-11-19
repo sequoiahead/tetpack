@@ -6,34 +6,31 @@
 
 #include "libgame/view/View.h"
 
-const unsigned int SCREEN_WIDTH_DEFAULT = 640;
-const unsigned int SCREEN_HEIGHT_DEFAULT = 480;
-const unsigned int SCREEN_BPP_DEFAULT = 32;
+const uint32_t SCREEN_WIDTH_DEFAULT = 640;
+const uint32_t SCREEN_HEIGHT_DEFAULT = 480;
+const uint32_t SCREEN_BPP_DEFAULT = 32;
 
 class ViewScreen : public View {
 public:
 	explicit ViewScreen(unsigned int = SCREEN_WIDTH_DEFAULT, unsigned int = SCREEN_HEIGHT_DEFAULT, unsigned int =
 			SCREEN_BPP_DEFAULT);
 	virtual ~ViewScreen();
+	ViewScreen(const ViewScreen&) = delete;
+	const ViewScreen& operator=(const ViewScreen&) = delete;
 
 	virtual void render();
 
 protected:
-	SDL_Window *window;
-	SDL_Renderer *renderer;
+	SDL_Window* window;
+	SDL_Renderer* renderer;
 
-	unsigned int width;
-	unsigned int height;
-	unsigned int bpp;
+	uint32_t width;
+	uint32_t height;
+	uint32_t bpp;
 
-	unsigned int lastTick;
+	uint32_t lastTick;
 
-	virtual void prepareScreen(unsigned int deltaTime) =0;
-
-private:
-	//noncopyable
-	ViewScreen(const ViewScreen&);
-	const ViewScreen& operator=(const ViewScreen&);
+	virtual void prepareScreen(uint32_t deltaTime) =0;
 };
 
 #endif /* VIEWSCREEN_H_ */
