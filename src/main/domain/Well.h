@@ -28,6 +28,9 @@ public:
 	void right(SDL_Event&);
 	void drop(SDL_Event&);
 
+	uint8_t getHeight() const;
+	uint8_t getWidth() const;
+
 private:
 	Signal<void()> signalLineBurned;
 	Signal<void()> signalStuck;
@@ -40,8 +43,19 @@ private:
 	TetrominoFactory* factoryNextMino;
 	Tetromino mino;
 
+	uint8_t w = 10; //blocks
+	uint8_t h = 15; //blocks
+
 	void nextRound();
 };
+
+inline uint8_t Well::getHeight() const {
+	return h;
+}
+
+inline uint8_t Well::getWidth() const {
+	return w;
+}
 
 inline const Tetromino& Well::getCurrentMino() const {
 	return mino;

@@ -6,8 +6,8 @@
 
 #include "libgame/view/View.h"
 
-const uint32_t SCREEN_WIDTH_DEFAULT = 640;
-const uint32_t SCREEN_HEIGHT_DEFAULT = 480;
+const uint32_t SCREEN_WIDTH_DEFAULT = 1024;
+const uint32_t SCREEN_HEIGHT_DEFAULT = 768;
 const uint32_t SCREEN_BPP_DEFAULT = 32;
 
 class ViewScreen : public View {
@@ -24,8 +24,8 @@ protected:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 
-	uint32_t width;
-	uint32_t height;
+	uint32_t widthPx;
+	uint32_t heightPx;
 	uint32_t bpp;
 
 	uint32_t lastTick;

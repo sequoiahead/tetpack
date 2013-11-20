@@ -1,7 +1,9 @@
 #include "Tetromino.h"
 
+constexpr std::array<std::pair<uint8_t,uint8_t>,Tetromino::MAX> Tetromino::dimensions;
+
 Tetromino::Tetromino(Tetromino::Type aType)
-		: type(aType), dir(DIR_UP), x(0), y(0) {
+		: type(aType), dir(DIR_UP), w(dimensions[aType].first), h(dimensions[aType].second) {
 }
 
 Tetromino::~Tetromino() {
@@ -19,7 +21,7 @@ void Tetromino::rotate(Direction aDir) {
 	}
 }
 
-void Tetromino::move(unsigned int aX, unsigned int aY) {
-	x = aX;
-	y = aY;
+void Tetromino::move(uint8_t dx, uint8_t dy) {
+	x += dx;
+	y += dy;
 }

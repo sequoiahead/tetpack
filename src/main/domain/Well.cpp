@@ -13,16 +13,21 @@ void Well::rotate(SDL_Event& evt) {
 }
 
 void Well::left(SDL_Event& evt) {
+	mino.move(-1,0);
 	signalMove.emit();
 }
 
 void Well::right(SDL_Event& evt) {
+	mino.move(1,0);
 	signalMove.emit();
 }
 
 void Well::drop(SDL_Event& evt) {
+	mino.move(0,1);
 	signalDrop.emit();
-	nextRound();
+	if(mino.getY() >= h) {
+		nextRound();
+	}
 }
 
 void Well::nextRound() {

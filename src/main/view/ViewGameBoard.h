@@ -14,16 +14,17 @@ public:
 	ViewGameBoard(const ViewGameBoard&) = delete;
 	const ViewGameBoard& operator=(const ViewGameBoard&) = delete;
 
-	void render();
-
 protected:
 	virtual void prepareScreen(unsigned int);
 
 private:
 	ResourceManager<ResourceImage>* imgMan;
 	const Well* well;
-	ResourceImage* minos[Tetromino::_LAST];
-	const char* minosImgs[Tetromino::_LAST];
+	SDL_Texture* minos[Tetromino::_LAST];
+	const char* minosUrls[Tetromino::_LAST];
+
+	uint8_t blockWidthPx;
+	uint8_t blockHeightPx;
 };
 
 #endif /* VIEWGAMEBOARD_H_ */
