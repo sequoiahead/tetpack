@@ -2,6 +2,7 @@
 #define WELL_H_
 
 #include <iostream>
+#include <SDL2/SDL_events.h>
 #include <libgame/event/Signal.h>
 
 #include "domain/TetrominoFactory.h"
@@ -13,68 +14,82 @@ public:
 
 	const Tetromino& getCurrentMino() const;
 
-	const Signal& onDrop() const;
-	const Signal& onHitGround() const;
-	const Signal& onHitWall() const;
-	const Signal& onLineBurned() const;
-	const Signal& onMove() const;
-	const Signal& onNextRound() const;
-	const Signal& onRotate() const;
-	const Signal& onStuck() const;
+	const Signal<void()>& onDrop() const;
+	const Signal<void()>& onHitGround() const;
+	const Signal<void()>& onHitWall() const;
+	const Signal<void()>& onLineBurned() const;
+	const Signal<void()>& onMove() const;
+	const Signal<void()>& onNextRound() const;
+	const Signal<void()>& onRotate() const;
+	const Signal<void()>& onStuck() const;
 
-	void rotate();
-	void left();
-	void right();
-	void drop();
+	void rotate(SDL_Event&);
+	void left(SDL_Event&);
+	void right(SDL_Event&);
+	void drop(SDL_Event&);
+
+	uint8_t getHeight() const;
+	uint8_t getWidth() const;
 
 private:
-	Signal signalLineBurned;
-	Signal signalStuck;
-	Signal signalRotate;
-	Signal signalMove;
-	Signal signalDrop;
-	Signal signalHitGround;
-	Signal signalHitWall;
-	Signal signalNextRound;
+	Signal<void()> signalLineBurned;
+	Signal<void()> signalStuck;
+	Signal<void()> signalRotate;
+	Signal<void()> signalMove;
+	Signal<void()> signalDrop;
+	Signal<void()> signalHitGround;
+	Signal<void()> signalHitWall;
+	Signal<void()> signalNextRound;
 	TetrominoFactory* factoryNextMino;
 	Tetromino mino;
 
+	uint8_t w = 10; //blocks
+	uint8_t h = 15; //blocks
+
 	void nextRound();
 };
+
+inline uint8_t Well::getHeight() const {
+	return h;
+}
+
+inline uint8_t Well::getWidth() const {
+	return w;
+}
 
 inline const Tetromino& Well::getCurrentMino() const {
 	return mino;
 }
 
-inline const Signal& Well::onDrop() const {
+inline const Signal<void()>& Well::onDrop() const {
 	return signalDrop;
 }
 
-inline const Signal& Well::onHitGround() const {
+inline const Signal<void()>& Well::onHitGround() const {
 	return signalHitGround;
 }
 
-inline const Signal& Well::onHitWall() const {
+inline const Signal<void()>& Well::onHitWall() const {
 	return signalHitWall;
 }
 
-inline const Signal& Well::onLineBurned() const {
+inline const Signal<void()>& Well::onLineBurned() const {
 	return signalLineBurned;
 }
 
-inline const Signal& Well::onMove() const {
+inline const Signal<void()>& Well::onMove() const {
 	return signalMove;
 }
 
-inline const Signal& Well::onNextRound() const {
+inline const Signal<void()>& Well::onNextRound() const {
 	return signalNextRound;
 }
 
-inline const Signal& Well::onRotate() const {
+inline const Signal<void()>& Well::onRotate() const {
 	return signalRotate;
 }
 
-inline const Signal& Well::onStuck() const {
+inline const Signal<void()>& Well::onStuck() const {
 	return signalStuck;
 }
 

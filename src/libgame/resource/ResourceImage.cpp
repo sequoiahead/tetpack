@@ -10,10 +10,6 @@ ResourceImage::ResourceImage(const std::string& aUrl)
 		ResourceException e(aUrl, IMG_GetError());
 		throw e;
 	}
-	if (NULL == surface) {
-		ResourceException e(aUrl, "Conversion into display format has failed");
-		throw e;
-	}
 }
 
 ResourceImage::~ResourceImage() {

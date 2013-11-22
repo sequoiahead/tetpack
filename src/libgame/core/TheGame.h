@@ -1,11 +1,13 @@
 #ifndef THEGAME_H_
 #define THEGAME_H_
 
+#include <cstdint>
 #include <map>
 #include <vector>
 #include <SDL2/SDL.h>
 
 #include "libgame/event/EventDispatcherInput.h"
+#include "libgame/event/Signal.h"
 
 class TheGame {
 public:
@@ -16,6 +18,7 @@ public:
 	~TheGame();
 
 	EventDispatcherInput& getEventDispatcher();
+	Signal<void()>& onTick();
 
 	void start();
 	void stop(SDL_Event&);
@@ -23,6 +26,7 @@ public:
 private:
 	bool isRunning;
 
+	Signal<void()> signalTick;
 	EventDispatcherInput evtDispatcherInput;
 };
 

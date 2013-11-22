@@ -15,16 +15,24 @@ TheGame::~TheGame() {
 
 void TheGame::start() {
 	SDL_Event event;
-//	Uint32 delay = (1000/60);
-//	SDL_TimerID timerTick = SDL_AddTimer(delay, TheGame::sendTick, NULL);
+	Uint32 delay = (1000/60);
 	isRunning = true;
+	uint32_t lastTick = SDL_GetTicks();
+	uint32_t ticks;
 	while (isRunning) {
-		if (!SDL_PollEvent(&event)) {
-			continue;
+		ticks = SDL_GetTicks();
+		if (SDL_PollEvent(&event)) {
+			evtDispatcherInput.dispatch(event);
 		}
-		evtDispatcherInput.dispatch(event);
+		if (lastTick - ticks > delay) {
+			signalTick.emit();
+		}
+		lastTick = ticks;
 	}
-//	SDL_RemoveTimer(timerTick);
+}
+
+Signal<void()>& TheGame::onTick() {
+	return signalTick;
 }
 
 void TheGame::stop(SDL_Event& evt) {
